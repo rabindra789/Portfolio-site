@@ -1,23 +1,33 @@
-<div class="author">
-    <h1 class="author_heading">Hi, I am Rabindra</h1>
-    <p class="author_body">Backend Developer and content creater</p>
+<div class="hero_section">
+    <div class="author">
+        <h1 class="author_heading">Hi, I am Rabindra</h1>
+        <h3 class="author_body">Backend Developer and content creater</h3>
+    </div>
+    
+    <img src="/img/hero_image.png" alt="person looking out through window" class="hero-image" width="275" height="275">
 </div>
 
-<img src="/img/hero-image.webp" alt="person looking out through window" class="hero-image" width="981" height="528">
-
 <section class="articles">
-    <h2 class="articles_heading">Latest Posts</h2>
+    <h2 class="articles_heading">Latest Projects</h2>
 
     <ul class="article-ul">
-        <li>
-            <a href="#">
-                <span>Post Title</span>
-                <span class="article-list_date">Date</span>
-            </a>
-        </li>
+        <!-- <% repos.forEach(repo=> { %>
+
+            <li>
+                <a href="<%= repo.html_url %>">
+                    <span>
+                        <%= repo.name %>
+                    </span>
+                    <span class="repo-list_date">
+                        <% const updatedAtDate=new Date(repo.updated_at); %>
+                            <%= updatedAtDate.toDateString() %>
+                    </span>
+                </a>
+            </li>
+            <% }) %> -->
     </ul>
 
-    <a href="#" class="pagination">&lt; View Older Posts</a>
+    <a href="#" class="pagination">&lt; View Older Projects</a>
 
-    
+
 </section>
