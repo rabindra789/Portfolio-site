@@ -1,18 +1,26 @@
 const express = require("express");
-const axios = require("axios")
+const axios = require("axios");
 const router = express.Router();
-const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer");
+
+const token = process.env.GITHUB_ACCESS_TOKEN;
 
 router.get("/", async (req, res) => {
   try {
-    const response = await axios.get('https://api.github.com/users/rabindra789/repos') 
-    const repos = response.data
-    res.render("index", {repos})
+    const response = await axios.get(
+      "https://api.github.com/users/rabindra789/repos",
+      {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      }
+    );
+    const repos = response.data;
+    res.render("index", { repos });
   } catch (error) {
     console.log(error);
   }
 });
-
 
 // function insertPostData() {
 //   Post.insertMany([
@@ -61,55 +69,43 @@ router.get("/", async (req, res) => {
 
 // // insertPostData()
 
-
-
-
-
-
-
-
-
 router.get("/about", (req, res) => {
   res.render("about");
 });
 
-
-router.get('/contact', (req, res) => {
-  res.render('contact');
+router.get("/contact", (req, res) => {
+  res.render("contact");
 });
 
-
-router.post('/contact', (req, res) => {
-  res.render("contact")
+router.post("/contact", (req, res) => {
+  res.render("contact");
   const { name, email, message } = req.body;
 
   // Setup Nodemailer transporter
   const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-          user: process.env.EMAIL_USER, // Your Gmail address
-          pass: process.env.EMAIL_PASS, // Your Gmail password or App Password
-      },
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER, // Your Gmail address
+      pass: process.env.EMAIL_PASS, // Your Gmail password or App Password
+    },
   });
 
   const mailOptions = {
-      from: email,
-      to: process.env.EMAIL_USER, 
-      subject: 'Portfolio contact section',
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+    from: email,
+    to: process.env.EMAIL_USER,
+    subject: "Portfolio contact section",
+    text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-          console.log(error);
-          res.status(500).send('Error sending message. Please try again later.');
-      } else {
-          console.log('Email sent: ' + info.response);
-          res.send('Thank you for contacting me. I will get back to you soon.');
-      }
+    if (error) {
+      console.log(error);
+      res.status(500).send("Error sending message. Please try again later.");
+    } else {
+      console.log("Email sent: " + info.response);
+      res.send("Thank you for contacting me. I will get back to you soon.");
+    }
   });
 });
-
-
 
 module.exports = router;
