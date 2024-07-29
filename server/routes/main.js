@@ -2,8 +2,11 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const nodemailer = require("nodemailer");
+const MarkdownIt = require('markdown-it');
+
 
 const token = process.env.GITHUB_ACCESS_TOKEN;
+const md = new MarkdownIt();
 
 router.get("/", async (req, res) => {
   try {
@@ -22,52 +25,20 @@ router.get("/", async (req, res) => {
   }
 });
 
-// function insertPostData() {
-//   Post.insertMany([
-//     {
-//       title: "Exploring Node.js",
-//       body: "This is an introductory post about Node.js and its uses."
-//     },
-//     {
-//       title: "Understanding Express.js",
-//       body: "This post delves into the basics and benefits of using Express.js."
-//     },
-//     {
-//       title: "EJS Templating Engine",
-//       body: "Learn how to use EJS to create dynamic web pages with ease."
-//     },
-//     {
-//       title: "JavaScript Promises",
-//       body: "An overview of promises in JavaScript and how to use them."
-//     },
-//     {
-//       title: "Asynchronous Programming",
-//       body: "This blog covers asynchronous programming concepts in JavaScript."
-//     },
-//     {
-//       title: "RESTful API Design",
-//       body: "A guide to designing RESTful APIs with Node.js and Express."
-//     },
-//     {
-//       title: "Handling Middleware",
-//       body: "Understand how middleware functions work in Express.js."
-//     },
-//     {
-//       title: "Debugging Node.js Apps",
-//       body: "Tips and tools for effectively debugging Node.js applications."
-//     },
-//     {
-//       title: "Deploying Node.js Apps",
-//       body: "Learn about the different methods for deploying Node.js applications."
-//     },
-//     {
-//       title: "Working with MongoDB",
-//       body: "An introduction to using MongoDB with Node.js for data storage."
-//     }
-//   ])
-// }
+router.get('/readme', async (req, res) => {
+  const { url } = req.query;
 
-// // insertPostData()
+  try {
+    const response = await axios.get(url);
+    const readmeContent = response.data;
+    const htmlContent = md.render(readmeContent); // Use markdown-it to render Markdown
+
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error fetching README:', error); // Log the error for debugging
+    res.status(500).send('Error fetching README');
+  }
+});
 
 router.get("/about", (req, res) => {
   res.render("about");
