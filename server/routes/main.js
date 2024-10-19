@@ -19,7 +19,11 @@ router.get("/", async (req, res) => {
       }
     );
     const repos = response.data;
-    res.render("index", { repos });
+    res.render("index", { 
+      repos, 
+      title: "Home - Rabindra's Portfolio", 
+      description: "Explore the projects and work of Rabindra, a backend developer based in India."
+    });
   } catch (error) {
     console.log(error);
   }
@@ -41,11 +45,17 @@ router.get("/readme", async (req, res) => {
 });
 
 router.get("/about", (req, res) => {
-  res.render("about");
+  res.render("about", {
+    title: "About Me - Rabindra",
+    description: "I am Rabindra, a backend developer based in India with experience in various technologies. Learn more about my journey and projects.",
+  });
 });
 
 router.get("/contact", (req, res) => {
-  res.render("contact");
+  res.render("contact", {
+    title: "Contact Me - Rabindra",
+    description: "Get in touch with Rabindra, a backend developer, through the contact form below.",
+  });
 });
 
 router.post("/contact", (req, res) => {
@@ -53,7 +63,11 @@ router.post("/contact", (req, res) => {
 
   // Validate email format
   if (!validator.isEmail(email)) {
-    return res.status(400).render("contact", { msg: "Invalid email address." });
+    return res.status(400).render("contact", { 
+      msg: "Invalid email address.", 
+      title: "Contact Me - Rabindra",
+      description: "Get in touch with Rabindra, a backend developer, through the contact form below." 
+    });
   }
 
   // Setup Nodemailer transporter
@@ -75,15 +89,17 @@ router.post("/contact", (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
-      res
-        .status(500)
-        .render("contact", {
-          msg: "Error sending message. Please try again later.",
-        });
+      res.status(500).render("contact", {
+        msg: "Error sending message. Please try again later.",
+        title: "Contact Me - Rabindra",
+        description: "Get in touch with Rabindra, a backend developer, through the contact form below."
+      });
     } else {
       console.log("Email sent: " + info.response);
       res.render("contact", {
         msg: "Thank you for contacting me. I will get back to you soon.",
+        title: "Contact Me - Rabindra",
+        description: "Get in touch with Rabindra, a backend developer, through the contact form below."
       });
     }
   });

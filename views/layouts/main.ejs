@@ -8,6 +8,8 @@
         <%= locals.title %>
     </title>
     <meta name="description" content="<%= locals.description %>">
+    <meta name="keywords" content="Rabindra, backend developer, projects, contact, portfolio">
+    <meta name="author" content="Rabindra">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
     <script type="text/javascript" defer src="/js/script.js"></script>
@@ -16,13 +18,13 @@
 
 <body>
     <%- include("../partials/search.ejs") %>
-    <div class="container">
-        <%- include("../partials/header.ejs") %>
-            <main class="main">
-                <%- body %>
-            </main>
-            <%- include("../partials/footer.ejs") %>
-    </div>  
+        <div class="container">
+            <%- include("../partials/header.ejs") %>
+                <main class="main">
+                    <%- body %>
+                </main>
+                <%- include("../partials/footer.ejs") %>
+        </div>
 </body>
 
 </html>
