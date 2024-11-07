@@ -1,68 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <div class="hero_section">
-    <div class="author">
-        <h2 class="author_heading">Hi, I am Rabindra Kumar Meher</h2>
-        <h3 class="author_body"><span id="element"></span></h3>
-        <div class="tools">
-            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
-                <img src="/icons/javascript.svg" alt="" class="svg" height="55" width="55">
-            </a>
-            <a href="https://docker.com">
-                <img src="/icons/docker.svg" alt="" class="svg" height="50" width="50">
-            </a>
-            <a href="https://postman.com">
-                <img src="/icons/postman.svg" alt="" class="svg" height="50" width="50">
-            </a>
-            <a href="https://linux.org">
-                <img src="/icons/linux.svg" alt="" class="svg" height="50" width="50">
-            </a>
-        </div>
-    </div>
-    
-    <div class="hero_img">
-        <img src="/img/hero_image.png" alt="person looking out through window" class="hero-image" width="350" height="350">
+<div class="hero_section">
+  <div class="author">
+    <h2 class="author_heading">Hi, I am Rabindra Kumar Meher</h2>
+    <h3 class="author_body"><span id="element"></span></h3>
+    <div class="tools">
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
+        <img src="/icons/javascript.svg" alt="" class="svg" height="55" width="55">
+      </a>
+      <a href="https://docker.com">
+        <img src="/icons/docker.svg" alt="" class="svg" height="50" width="50">
+      </a>
+      <a href="https://postman.com">
+        <img src="/icons/postman.svg" alt="" class="svg" height="50" width="50">
+      </a>
+      <a href="https://linux.org">
+        <img src="/icons/linux.svg" alt="" class="svg" height="50" width="50">
+      </a>
     </div>
   </div>
 
-  <section class="articles">
-    <h2 class="articles_heading">Latest Projects</h2>
-    <ul class="article-ul">
-        <% repos.forEach(repo => { %>
-            <li>
-                <a href="#" onclick="showReadme('<%= `https://raw.githubusercontent.com/${repo.owner.login}/${repo.name}/main/README.md` %>'); return false;">
-                    <span><%= repo.name %></span>
-                    <span class="repo-list_date">
-                        <% const updatedAtDate = new Date(repo.updated_at); %>
-                        <%= updatedAtDate.toDateString() %>
-                    </span>
-                </a>
-            </li>
-        <% }) %>
-    </ul>
-    <a href="https://github.com/rabindra789?tab=repositories" class="pagination">&lt; View Older Projects</a>
-  </section>
+  <div class="hero_img">
+    <img src="https://i.ibb.co/hWTBW80/hero-image.png" alt="person looking out through window" class="hero-image" width="350" height="350">
+  </div>
+</div>
 
-  <div id="readme-content"></div>
+<section class="articles">
+  <h2 class="articles_heading">Latest Projects</h2>
+  <ul class="article-ul">
+    <% repos.forEach(repo=> { %>
+      <li>
+        <a href="#"
+          onclick="showReadme('<%= `https://raw.githubusercontent.com/${repo.owner.login}/${repo.name}/main/README.md` %>'); return false;">
+          <span>
+            <%= repo.name %>
+          </span>
+          <span class="repo-list_date">
+            <% const updatedAtDate=new Date(repo.updated_at); %>
+              <%= updatedAtDate.toDateString() %>
+          </span>
+        </a>
+      </li>
+      <% }) %>
+  </ul>
+  <a href="https://github.com/rabindra789?tab=repositories" class="pagination">&lt; View Older Projects</a>
+</section>
 
-  <script>
-    async function showReadme(url, githubUrl) {
-      const response = await fetch(`/readme?url=${encodeURIComponent(url)}`);
-      const readmeHtml = await response.text();
-      document.getElementById('readme-content').innerHTML = `
+<div id="readme-content"></div>
+
+<script>
+  async function showReadme(url, githubUrl) {
+    const response = await fetch(`/readme?url=${encodeURIComponent(url)}`);
+    const readmeHtml = await response.text();
+    document.getElementById('readme-content').innerHTML = `
         <div>
           ${readmeHtml}
           <p><a href="${githubUrl}" target="_blank">View on GitHub</a></p>
         </div>
       `;
-    }
-  </script>
-</body>
-</html>
+  }
+</script>
